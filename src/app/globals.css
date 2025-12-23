@@ -1,0 +1,308 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --dynamic-island-width: 126px;
+  --dynamic-island-height: 37px;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* iOS Style Scrollbar */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+/* Glass Effect */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+}
+
+/* iPhone Frame */
+.iphone-frame {
+  width: 393px;
+  height: 852px;
+  background: #000;
+  border-radius: 55px;
+  padding: 12px;
+  box-shadow: 
+    0 0 0 3px #1a1a1a,
+    0 0 0 6px #333,
+    0 50px 100px rgba(0, 0, 0, 0.5),
+    inset 0 0 20px rgba(255, 255, 255, 0.05);
+  position: relative;
+}
+
+.iphone-screen {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  border-radius: 45px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Dynamic Island */
+.dynamic-island {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--dynamic-island-width);
+  height: var(--dynamic-island-height);
+  background: #000;
+  border-radius: 20px;
+  z-index: 100;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dynamic-island:hover {
+  width: 180px;
+  height: 42px;
+}
+
+/* Status Bar */
+.status-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 54px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 14px 28px 0;
+  z-index: 50;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Home Indicator */
+.home-indicator {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 134px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 3px;
+  z-index: 100;
+}
+
+/* App Icons */
+.app-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.app-icon:active {
+  transform: scale(0.9);
+}
+
+.app-icon:hover {
+  transform: scale(1.05);
+}
+
+/* Dock */
+.dock {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border-radius: 30px;
+  padding: 12px 16px;
+  display: flex;
+  gap: 20px;
+  z-index: 50;
+}
+
+/* Message Bubbles */
+.message-bubble {
+  max-width: 75%;
+  padding: 10px 14px;
+  border-radius: 18px;
+  font-size: 16px;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+.message-sent {
+  background: #007AFF;
+  color: white;
+  border-bottom-right-radius: 4px;
+  margin-left: auto;
+}
+
+.message-received {
+  background: #3A3A3C;
+  color: white;
+  border-bottom-left-radius: 4px;
+}
+
+/* Wallpaper */
+.wallpaper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, 
+    #2c1654 0%, 
+    #1e3a5f 25%, 
+    #0d4f5f 50%, 
+    #1a5e4a 75%, 
+    #2d5016 100%
+  );
+  z-index: 0;
+}
+
+/* Lock Screen */
+.lock-screen-time {
+  font-size: 82px;
+  font-weight: 200;
+  letter-spacing: -2px;
+  color: white;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+.lock-screen-date {
+  font-size: 20px;
+  font-weight: 500;
+  color: white;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* App Opening Animation */
+@keyframes app-open {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+    border-radius: 40px;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    border-radius: 0;
+  }
+}
+
+.app-open {
+  animation: app-open 0.3s ease-out forwards;
+}
+
+/* Conversation List */
+.conversation-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  gap: 12px;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.conversation-item:active {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* Keyboard */
+.ios-keyboard {
+  background: #2C2C2E;
+  padding: 8px 4px 20px;
+  display: grid;
+  gap: 8px;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.key {
+  min-width: 32px;
+  height: 42px;
+  background: #636366;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.key:active {
+  background: #8E8E93;
+}
+
+.key-special {
+  background: #48484A;
+  font-size: 14px;
+  min-width: 42px;
+}
+
+.key-space {
+  flex: 1;
+  max-width: 180px;
+}
+
+.key-send {
+  background: #007AFF;
+  padding: 0 12px;
+}
+
+/* Shake Animation for wrong PIN */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
