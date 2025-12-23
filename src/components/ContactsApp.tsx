@@ -103,7 +103,7 @@ export default function ContactsApp({ onClose }: ContactsAppProps) {
       <div className="dynamic-island" />
       
       {/* Header */}
-      <div className="glass-dark pt-14 pb-4 px-4">
+      <div className="glass-dark pt-14 pb-4 px-4 z-10 sticky top-0">
         <div className="flex items-center justify-between mb-4">
           <button onClick={onClose} className="text-ios-blue text-[17px]">
             Fermer
@@ -116,7 +116,7 @@ export default function ContactsApp({ onClose }: ContactsAppProps) {
         <p className="text-gray-400 text-sm mt-1">{contacts.length} contacts</p>
         
         {/* Search Bar */}
-        <div className="mt-4 bg-[#1C1C1E] rounded-xl px-4 py-2 flex items-center gap-2">
+        <div className="mt-4 bg-[#1C1C1E]/80 backdrop-blur-md rounded-xl px-4 py-2 flex items-center gap-2 transition-colors focus-within:bg-[#2C2C2E]">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8E8E93" strokeWidth="2">
             <circle cx="11" cy="11" r="8"/>
             <line x1="21" y1="21" x2="16.65" y2="16.65"/>
@@ -135,13 +135,13 @@ export default function ContactsApp({ onClose }: ContactsAppProps) {
       <div className="flex-1 overflow-y-auto">
         {Object.entries(groupedContacts).map(([letter, contactsGroup]) => (
           <div key={letter}>
-            <div className="px-4 py-1 bg-[#1C1C1E] sticky top-0">
+            <div className="px-4 py-1 bg-[#1C1C1E]/90 backdrop-blur-sm sticky top-0 z-0 text-gray-400 text-sm font-bold">
               <span className="text-white font-semibold">{letter}</span>
             </div>
             {contactsGroup.map(contact => (
               <div 
                 key={contact.id}
-                className="conversation-item border-b border-white/5"
+                className="conversation-item border-b border-white/5 p-3 flex items-center gap-3 active-scale cursor-pointer"
                 onClick={() => setSelectedContact(contact)}
               >
                 <div 

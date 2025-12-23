@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import StatusBar from '@/components/StatusBar';
 import AppIcon from '@/components/AppIcon';
 import MessagesApp from '@/components/MessagesApp';
@@ -22,6 +22,10 @@ export default function Home() {
   const [currentTime, setCurrentTime] = useState('');
   const [currentDate, setCurrentDate] = useState('');
   const [openApp, setOpenApp] = useState<AppType>(null);
+  
+  const [swipeY, setSwipeY] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const startYRef = useRef<number>(0);
 
   useEffect(() => {
     const updateDateTime = () => {
@@ -69,12 +73,56 @@ export default function Home() {
     setShowPinPad(true);
   };
 
+  // Gestion du Swipe (Tactile et Souris)
+  const handleTouchStart = (e: React.TouchEvent | React.MouseEvent) => {
+    setIsDragging(true);
+    const clientY = 'touches' in e ? e.touches[0].clientY : (e as React.MouseEvent).clientY;
+    startYRef.current = clientY;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent | React.MouseEvent) => {
+    if (!isDragging) return;
+    const clientY = 'touches' in e ? e.touches[0].clientY : (e as React.MouseEvent).clientY;
+    const deltaY = clientY - startYRef.current;
+    
+    // On autorise seulement le glissement vers le haut (valeurs négatives)
+    if (deltaY < 0) {
+      setSwipeY(deltaY);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+    // Si on a glissé de plus de 150px vers le haut, on déverrouille
+    if (swipeY < -150) {
+      handleUnlock();
+    }
+    setSwipeY(0);
+  };
+
   // Lock Screen
   if (isLocked && !showPinPad) {
     return (
       <main className="flex items-center justify-center min-h-screen">
         <div className="iphone-frame">
-          <div className="iphone-screen relative">
+          <div 
+            className="iphone-screen relative cursor-grab active:cursor-grabbing"
+            onMouseDown={handleTouchStart}
+            onMouseMove={handleTouchMove}
+            onMouseUp={handleTouchEnd}
+            onMouseLeave={handleTouchEnd}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            <div 
+              className="absolute inset-0 w-full h-full"
+              style={{ 
+                transform: `translateY(${swipeY}px)`,
+                opacity: Math.max(0, 1 - Math.abs(swipeY) / 600),
+                transition: isDragging ? 'none' : 'all 0.3s cubic-bezier(0.32, 0.72, 0, 1)'
+              }}
+            >
             <div className="wallpaper" />
             <StatusBar />
             <div className="dynamic-island" />
@@ -102,14 +150,14 @@ export default function Home() {
               </div>
               
               <div 
-                className="absolute bottom-12 left-0 right-0 text-center cursor-pointer"
-                onClick={handleUnlock}
+                className="absolute bottom-12 left-0 right-0 text-center pointer-events-none"
               >
                 <p className="text-white/60 text-sm animate-pulse">Glisser vers le haut pour déverrouiller</p>
               </div>
             </div>
             
-            <div className="home-indicator" onClick={handleUnlock} style={{ cursor: 'pointer' }} />
+            <div className="home-indicator" />
+            </div>
           </div>
         </div>
       </main>

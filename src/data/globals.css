@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ios-blue: #0A84FF;
+  --ios-gray: #8E8E93;
+  --ios-bg: #000000;
+  --ios-separator: rgba(255, 255, 255, 0.12);
+}
+
+body {
+  background: #121212;
+  color: white;
+  -webkit-font-smoothing: antialiased;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Animation d'ouverture d'application style iOS */
+@keyframes app-enter {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+.app-open {
+  animation: app-enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  background: black;
+  overflow: hidden;
+  border-radius: 48px; /* Coins arrondis iPhone */
+  box-shadow: 0 0 0 10px rgba(30, 30, 30, 0.5); /* Bordure châssis */
+}
+
+/* Glassmorphism Avancé */
+.glass-dark {
+  background: rgba(20, 20, 20, 0.75);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Dynamic Island */
+.dynamic-island {
+  position: absolute;
+  top: 11px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 126px;
+  height: 37px;
+  background: black;
+  border-radius: 20px;
+  z-index: 9999;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dynamic-island:hover {
+  width: 160px;
+  height: 45px;
+  cursor: pointer;
+}
+
+/* Home Indicator */
+.home-indicator {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 135px;
+  height: 5px;
+  background: white;
+  border-radius: 100px;
+  opacity: 0.4;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+/* Messages Modernes */
+.message-bubble {
+  padding: 10px 16px;
+  border-radius: 20px;
+  font-size: 17px;
+  line-height: 22px;
+  position: relative;
+  max-width: 75%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.message-sent {
+  background: linear-gradient(135deg, #0A84FF 0%, #0066CC 100%);
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.message-received {
+  background: #262628;
+  color: white;
+  border-bottom-left-radius: 4px;
+}
+
+/* Utilitaires */
+.active-scale:active {
+  transform: scale(0.96);
+  opacity: 0.8;
+  transition: all 0.15s ease;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

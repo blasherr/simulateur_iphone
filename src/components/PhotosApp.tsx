@@ -33,7 +33,7 @@ export default function PhotosApp({ onClose }: PhotosAppProps) {
         
         <div className="flex-1 flex items-center justify-center p-4">
           <div 
-            className="w-full aspect-square rounded-3xl flex items-center justify-center text-8xl"
+            className="w-full aspect-square rounded-3xl flex items-center justify-center text-8xl shadow-2xl scale-100 transition-transform duration-300"
             style={{ background: selectedPhoto.color }}
           >
             {selectedPhoto.emoji}
@@ -59,7 +59,7 @@ export default function PhotosApp({ onClose }: PhotosAppProps) {
       <div className="dynamic-island" />
       
       {/* Header */}
-      <div className="glass-dark pt-14 pb-4 px-4">
+      <div className="glass-dark pt-14 pb-4 px-4 z-10 sticky top-0">
         <div className="flex items-center justify-between mb-4">
           <button onClick={onClose} className="text-ios-blue text-[17px]">
             Fermer
@@ -74,11 +74,11 @@ export default function PhotosApp({ onClose }: PhotosAppProps) {
 
       {/* Photos Grid */}
       <div className="flex-1 overflow-y-auto p-1">
-        <div className="grid grid-cols-3 gap-1">
+        <div className="grid grid-cols-3 gap-[1px]">
           {dummyPhotos.map(photo => (
             <div 
               key={photo.id}
-              className="aspect-square rounded-sm flex items-center justify-center text-4xl cursor-pointer hover:opacity-80 transition-opacity"
+              className="aspect-square flex items-center justify-center text-4xl cursor-pointer active:opacity-70 transition-opacity"
               style={{ background: photo.color }}
               onClick={() => setSelectedPhoto(photo)}
             >
@@ -90,7 +90,7 @@ export default function PhotosApp({ onClose }: PhotosAppProps) {
 
       {/* Bottom Tab Bar */}
       <div className="glass-dark border-t border-white/10 py-2 pb-8 px-6">
-        <div className="flex justify-around">
+        <div className="flex justify-around items-end">
           <button className="flex flex-col items-center text-ios-blue">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
               <rect x="3" y="3" width="7" height="7" rx="1"/>
